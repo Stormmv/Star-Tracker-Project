@@ -16,13 +16,13 @@ void testLogFor15m()
 {
     //run motor for 15 minutes
     unsigned long currentMillis = millis();
-    if (currentMillis < (Minute1 * 15))
+    if (currentMillis < 900000)
     {
         motor.runSpeed();
     }
 
     //get angle change every minute
-    if (currentMillis - previousMillis >= Minute1 && minuteCounter < 15)
+    if (currentMillis - previousMillis >= 60000 && minuteCounter < 15)
     {
         previousMillis = currentMillis;
 
@@ -45,7 +45,7 @@ void testLogFor15m()
     }
 
     //print final angle changes after 15 minutes
-    if (currentMillis >= (Minute1 * 15) && minuteCounter == 15)
+    if (currentMillis >= 900000 && minuteCounter == 15)
     {
         Serial.println("Final angle changes over 15 minutes:");
         for (int i = 0; i < 15; i++)
@@ -73,7 +73,7 @@ void testGetSpeed()
     motor.setSpeed(startingSpeed);
     motor.runSpeed();
     //get angle change every 2 minutes
-    if (millis() - previousMillis >= (Minute1 * 2))
+    if (millis() - previousMillis >= 120000)
     {
         float currentAngle = getAngle();
         float angleChange = currentAngle - initialAngle;

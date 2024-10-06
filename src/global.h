@@ -19,6 +19,4 @@ extern int maxSpeed;
 extern int speed;
 extern int steps;
 
-extern int Minute1;
-
 float getAngle();

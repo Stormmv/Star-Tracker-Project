@@ -16,9 +16,6 @@ int maxSpeed = 200;
 int speed = 144;
 int steps = 200;
 
-//time in milliseconds
-int Minute1 = 60000;
-
 //====================================================================================================
 
 //get angle function

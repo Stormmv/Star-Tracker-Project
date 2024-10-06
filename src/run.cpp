@@ -1,17 +1,15 @@
 #include "run.h"
 
-int timeToRun = Minute1 * 30;
-
 void run()
 {
     //run motor for 30 minutes
-    if (millis() < timeToRun)
+    if (millis() < 1800000)
     {
         motor.runSpeed();
     }
 
     //get final angle and print it once 30 minutes is up, then stop
-    if (millis() >= timeToRun)
+    if (millis() >= 1800000)
     {
         float currentAngle = getAngle();
         float angleChange = currentAngle - initialAngle;
