@@ -1,7 +1,7 @@
 #include "global.h"
 
 //define motor and accelerometer
-AccelStepper motor(AccelStepper::FULL4WIRE, 10, 12, 11, 13);
+AccelStepper motor(AccelStepper::FULL4WIRE, 6, 8, 7, 9);
 Adafruit_ADXL345_Unified accel = Adafruit_ADXL345_Unified(12345);
 
 //for angle calculation
