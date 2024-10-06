@@ -20,7 +20,7 @@ int steps = 200;
 
 //get angle function
 //gets the angle and averages it so that it is accurate enough to calibrate with
-int averageTimes = 10000;
+int averageTimes = 5000;
 float getAngle()
 {
     // get average angle
