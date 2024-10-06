@@ -2,13 +2,11 @@
 
 #include <AccelStepper.h>
 #include "Arduino.h"
-#include "Stepper.h"
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_ADXL345_U.h>
 
 extern AccelStepper motor;
-extern Stepper stepper;
 extern Adafruit_ADXL345_Unified accel;
 
 extern float x;

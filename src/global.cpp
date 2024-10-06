@@ -1,24 +1,28 @@
 #include "global.h"
 
-Stepper stepper(200, 13, 11, 12, 10);
+//define motor and accelerometer
 AccelStepper motor(AccelStepper::FULL4WIRE, 10, 12, 11, 13);
 Adafruit_ADXL345_Unified accel = Adafruit_ADXL345_Unified(12345);
 
+//for angle calculation
 float x = 0.0;
 float y = 0.0;
 float z = 0.0;
 float initialAngle = 0.0;
 
+//motor controller
 int acceleration = 20000;
 int maxSpeed = 200;
 int speed = 144;
 int steps = 200;
 
+//time in milliseconds
 int Minute1 = 60000;
 
 //====================================================================================================
 
-//get angle
+//get angle function
+//gets the angle and averages it so that it is accurate enough to calibrate with
 int averageTimes = 10000;
 float getAngle()
 {

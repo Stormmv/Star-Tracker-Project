@@ -4,10 +4,13 @@ int timeToRun = Minute1 * 30;
 
 void run()
 {
+    //run motor for 30 minutes
     if (millis() < timeToRun)
     {
         motor.runSpeed();
     }
+
+    //get final angle and print it once 30 minutes is up, then stop
     if (millis() >= timeToRun)
     {
         float currentAngle = getAngle();

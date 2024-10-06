@@ -1,60 +1,27 @@
 #include "testing.h"
 
+//array to store angles for each minute
 float angleChanges[15];
+
+//time in milliseconds
 unsigned long previousMillis = 0;
+
+//counter for minutes
 int minuteCounter = 0;
-int startingSpeed = 144;
 
-void test15min()
-{
-    if (millis() < (Minute1 * 15))
-    {
-        motor.runSpeed();
-    }
-    if (millis() >= (Minute1 * 15))
-    {
-        float currentAngle = getAngle();
-        float angleChange = currentAngle - initialAngle;
-        Serial.print("Final angle: ");
-        Serial.println(currentAngle);
-        Serial.print("Angle change: ");
-        Serial.println(angleChange);
-        Serial.print("Expected angle change: 3.75");
-        while (1)
-        {
-        }
-    }
-}
-
-void test1min()
-{
-    if (millis() < Minute1)
-    {
-        motor.runSpeed();
-    }
-    if (millis() >= Minute1)
-    {
-        float currentAngle = getAngle();
-        float angleChange = currentAngle - initialAngle;
-        Serial.print("Final angle: ");
-        Serial.println(currentAngle);
-        Serial.print("Angle change: ");
-        Serial.println(angleChange);
-        Serial.print("Expected angle change: 0.25");
-        while (1)
-        {
-        }
-    }
-}
+//starting speed for calibration
+int startingSpeed = speed;
 
 void testLogFor15m()
 {
+    //run motor for 15 minutes
     unsigned long currentMillis = millis();
     if (currentMillis < (Minute1 * 15))
     {
         motor.runSpeed();
     }
 
+    //get angle change every minute
     if (currentMillis - previousMillis >= Minute1 && minuteCounter < 15)
     {
         previousMillis = currentMillis;
@@ -77,6 +44,7 @@ void testLogFor15m()
         minuteCounter++;
     }
 
+    //print final angle changes after 15 minutes
     if (currentMillis >= (Minute1 * 15) && minuteCounter == 15)
     {
         Serial.println("Final angle changes over 15 minutes:");
@@ -98,10 +66,13 @@ void testLogFor15m()
     }
 }
 
+//calibrate motor speed
 void testGetSpeed()
 {
+    //run motor for 2 minutes
     motor.setSpeed(startingSpeed);
     motor.runSpeed();
+    //get angle change every 2 minutes
     if (millis() - previousMillis >= (Minute1 * 2))
     {
         float currentAngle = getAngle();
@@ -110,6 +81,8 @@ void testGetSpeed()
         Serial.println(currentAngle);
         Serial.print("Angle change: ");
         Serial.println(angleChange);
+
+        //increase speed if angle change is less than 0.49
         if (angleChange < 0.49)
         {
             startingSpeed++;
@@ -117,6 +90,8 @@ void testGetSpeed()
             Serial.println(startingSpeed);
             Serial.println("==============================================");
         }
+
+        //decrease speed if angle change is more than 0.51
         else if (angleChange > 0.51)
         {
             startingSpeed--;
@@ -124,6 +99,8 @@ void testGetSpeed()
             Serial.println(startingSpeed);
             Serial.println("==============================================");
         }
+
+        //print speed if angle change is between 0.49 and 0.51
         else if (angleChange >= 0.49 && angleChange <= 0.51)
         {
             delay(50);
@@ -131,11 +108,14 @@ void testGetSpeed()
             Serial.println(startingSpeed);
             Serial.println("==============================================");
         }
+        
+        //reset angle and time
         initialAngle = currentAngle;
         previousMillis = millis();
     }
 }
 
+//show angle for accelerometer testing
 void showAngle()
 {
     float currentAngle = getAngle();

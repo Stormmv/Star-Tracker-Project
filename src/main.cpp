@@ -2,8 +2,7 @@
 #include "testing.h"
 #include "run.h"
 
-bool test15m = false;
-bool test1m = false;
+//testing booleans
 bool testLog15m = false;
 bool testGetSpeedBool = false;
 bool showAngleBool = false;
@@ -11,10 +10,14 @@ bool showAngleBool = false;
 void setup()
 {
   Serial.begin(115200);
+  
+  //set up motor
   motor.setAcceleration(acceleration);
   motor.setMaxSpeed(maxSpeed);
   motor.setSpeed(speed);
   motor.setCurrentPosition(0);
+
+  //set up accelerometer
   while (!accel.begin())
   {
     Serial.println("Ooops, no ADXL345 detected ... Check your wiring!");
@@ -22,30 +25,18 @@ void setup()
   }
   accel.setRange(ADXL345_RANGE_2_G);
 
-  sensors_event_t event;
-  accel.getEvent(&event);
-
-  x = event.acceleration.x;
-  y = event.acceleration.y;
-  z = event.acceleration.z;
+  //get initial angle and print it
   initialAngle = getAngle();
   Serial.print("Starting angle: ");
   Serial.println(initialAngle);
 
+  //set up motor speed
   motor.setSpeed(speed);
 }
 
 void loop()
 {
-  if (test15m)
-  {
-    test15min();
-  }
-  else if (test1m)
-  {
-    test1min();
-  }
-  else if (testLog15m)
+  if (testLog15m)
   {
     testLogFor15m();
   }
