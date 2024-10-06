@@ -24,7 +24,7 @@ int averageTimes = 5000;
 float getAngle()
 {
     // get average angle
-    delay(1000);
+    delay(1000); //to stop any vibrations or movements that may throw off the angle calculation
     sensors_event_t event;
     accel.getEvent(&event);
     float angleBefore = 0;

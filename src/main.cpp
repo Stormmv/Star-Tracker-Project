@@ -6,6 +6,7 @@
 bool testLog15m = false;
 bool testGetSpeedBool = false;
 bool showAngleBool = false;
+bool debug = false;
 
 void setup()
 {
@@ -36,6 +37,17 @@ void setup()
 
 void loop()
 {
+  if (debug)
+  {
+    sensors_event_t event;
+    accel.getEvent(&event);
+    x = event.acceleration.x;
+    y = event.acceleration.y;
+    z = event.acceleration.z;
+    float angle = atan2(x, z) * (180.0 / M_PI);
+    Serial.print("Angle: ");
+    Serial.println(angle);
+  }
   if (testLog15m)
   {
     testLogFor15m();
