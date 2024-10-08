@@ -43,7 +43,7 @@ void run()
     motor.runSpeed();
 
     // Debug printing every 60 seconds
-    if (currentTime - lastDebugTime >= 60000) // Every 60 seconds (1 minute)
+    if (currentTime - lastDebugTime >= 60000 && debugPrint) // Every 60 seconds (1 minute)
     {
         debugAngle = getAngle();
         Serial.print("Time: ");
@@ -60,7 +60,7 @@ void run()
     }
 
     // Stop the motor when 30 minutes (1800000 ms) have passed
-    if (millis() >= 1800000)
+    if (millis() >= 1800000 && debugPrint)
     {
         motor.stop();
         debugAngle = getAngle();

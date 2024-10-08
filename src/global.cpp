@@ -17,7 +17,7 @@ int minSpeed = 100;
 float speed = 100;
 int steps = 200;
 
-bool debugPrint = true;
+bool debugPrint = false;
 
 float lastAngle = 0.0;
 
