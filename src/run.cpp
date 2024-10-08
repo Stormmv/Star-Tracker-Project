@@ -2,85 +2,50 @@
 
 float finalAngle = 7.5; // Target final angle (degrees) at 30 minutes
 float debugAngle = 0.0;
-
-float previousError = 0.0;
-float integral = 0.0;
 unsigned long lastTime = 0;
-unsigned long lastPIDTime = 0; // Track the last time the PID loop ran
 unsigned long lastDebugTime = 0;
-float setPoint = 0.0;
 
 void run()
 {
     unsigned long currentTime = millis();
+    unsigned long elapsedTime = currentTime / 1000; // Convert time to seconds
 
-    // run motor for 30 minutes
+    // Kalman filter update
+    kz = getRawAngle(); // Get raw sensor angle
+    p = p + q;
+    float k = p / (p + r);
+    x_hat = x_hat + k * (kz - x_hat);
+    p = (1 - k) * p;
 
-    if (currentTime - lastPIDTime >= 10) // Check if 10ms have passed
+    // Calculate the expected angle based on time
+    float totalTime = 1800.0; // Total time in seconds (30 minutes)
+    float expectedAngle = (elapsedTime / totalTime) * finalAngle; // Linearly scale the angle with time
+
+    // Calculate the current angle using Kalman filtered data
+    float currentAngle = x_hat;
+
+    // Compare current angle with expected angle and adjust motor speed
+    float angleDifference = expectedAngle - (currentAngle - initialAngle);
+
+    // Speed adjustment based on angle difference
+    speed = speed * (angleDifference + 1);
+
+    // Cap the speed between minimum and maximum values
+    if (speed < 10)
     {
-        // Calculate the dynamic setPoint: the target angle at the current time
-        float elapsedTime = currentTime / 1000.0;       // Convert time to seconds
-        setPoint = (elapsedTime / 1800.0) * finalAngle; // Target angle at this time
-
-        // Get the current angle with filtering
-        kz = getRawAngle(); // Replace with your function to get the current angle measurement
-
-        // Prediction step
-        p = p + q; // Update error covariance
-
-        // Update step
-        k = p / (p + r);                  // Calculate Kalman gain
-        x_hat = x_hat + k * (kz - x_hat); // Update estimated value
-        p = (1 - k) * p;                  // Update error covariance
-
-        // Now, use x_hat instead of currentAngle in your calculations
-        //float currentAngle = (lastAngle * 0.9) + (x_hat * 0.1); // Use the filtered angle
-        //lastAngle = currentAngle;
-        float currentAngle = x_hat;
-
-        // Calculate error
-        float error = setPoint - (currentAngle - initialAngle);
-
-        // Calculate integral and derivative
-        integral += error * (currentTime - lastPIDTime);
-        float derivative = (error - previousError) / (currentTime - lastPIDTime);
-
-        // Calculate PID output
-        float speed = kp * error + ki * integral + kd * derivative;
-
-        // Set motor speed based on PID output (adjust according to your motor's capabilities)
-        motor.setSpeed(speed); // Assuming motor.setSpeed() adjusts speed appropriately
-
-        // Run the motor at the calculated speed
-
-        // Update for the next loop
-        previousError = error;
-        lastPIDTime = currentTime; // Update the time for the next PID loop
-        if (debugPrint)
-        {
-            if (currentTime - lastDebugTime >= 60000) // Every 60 seconds (1 minute)
-            {
-                debugAngle = getAngle();
-                Serial.print("Time: ");
-                Serial.print(currentTime / 60000); // Print time in minutes
-                Serial.print(" min | Current Angle Change: ");
-                Serial.print(debugAngle - initialAngle);
-                Serial.print(" | Desired Angle Change: ");
-                Serial.println(setPoint);
-                lastDebugTime = currentTime;
-            }
-        }
+        speed = 10; // Minimum speed
     }
-
-    if (motor.speed() < 10)
+    if (speed > maxSpeed)
     {
-        motor.setSpeed(10);
+        speed = maxSpeed; // Cap at maximum speed
     }
-
+    Serial.print("Speed: ");
+    Serial.println(speed);
+    motor.setSpeed(speed);
     motor.runSpeed();
 
-    // get final angle and print it once 30 minutes is up, then stop
-    if (millis() >= 1800000)
+    // Debug printing every 60 seconds
+    if (currentTime - lastDebugTime >= 60000) // Every 60 seconds (1 minute)
     {
         debugAngle = getAngle();
         Serial.print("Time: ");
@@ -88,10 +53,23 @@ void run()
         Serial.print(" min | Current Angle Change: ");
         Serial.print(debugAngle - initialAngle);
         Serial.print(" | Desired Angle Change: ");
-        Serial.println(setPoint);
+        Serial.print((elapsedTime / totalTime) * finalAngle);
+        Serial.print(" | Kalman Angle: ");
+        Serial.print(x_hat);
+        Serial.print(" | Actual Angle: ");
+        Serial.println(getAngle());
+        lastDebugTime = currentTime;
+    }
 
-        // Stop the motor
+    // Stop the motor when 30 minutes (1800000 ms) have passed
+    if (millis() >= 1800000)
+    {
         motor.stop();
+        debugAngle = getAngle();
+        Serial.print("Time: ");
+        Serial.print(currentTime / 60000); // Print time in minutes
+        Serial.print(" min | Final Angle: ");
+        Serial.println(debugAngle);
 
         while (1)
         {

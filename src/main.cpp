@@ -14,8 +14,6 @@ void setup()
   // set up motor
   motor.setAcceleration(acceleration);
   motor.setMaxSpeed(maxSpeed);
-  motor.setSpeed(speed);
-  motor.setCurrentPosition(0);
 
   // set up accelerometer
   while (!accel.begin())
@@ -39,8 +37,6 @@ void setup()
     Serial.print("kd: ");
     Serial.println(kd);
   }
-  // set up motor speed
-  motor.setSpeed(speed);
 }
 
 void loop()

@@ -12,24 +12,24 @@ float initialAngle = 0.0;
 
 // motor controller
 int acceleration = 20000;
-int maxSpeed = 300;
+int maxSpeed = 350;
 float speed = 130;
 int steps = 200;
 
 bool debugPrint = true;
 
-float kp = 0.95;
-float ki = 0.2;
-float kd = 0.1;
+float kp = 1.00;
+float ki = 0.20;
+float kd = 0.08;
 
 float lastAngle = 0.0;
 
-float q = 0.02; // Process noise covariance
-float r = 0.2; // Measurement noise covariance
+float q = 0.02;  // Process noise covariance
+float r = 0.8;   // Measurement noise covariance
 float k = 0;     // Kalman gain
 float x_hat = 0; // Estimated value
 float p = 1;     // Error covariance
-float kz;         // Measurement
+float kz;        // Measurement
 
 //====================================================================================================
 

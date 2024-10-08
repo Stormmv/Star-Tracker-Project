@@ -126,20 +126,14 @@ void showAngle()
 // test Kalman filter
 void testKalmanFilter()
 {
-    kz = getRawAngle(); // Replace with your function to get the current angle measurement
-
-    // Prediction step
-    p = p + q; // Update error covariance
-
-    // Update step
-    k = p / (p + r);                  // Calculate Kalman gain
-    x_hat = x_hat + k * (kz - x_hat); // Update estimated value
-    p = (1 - k) * p;                  // Update error covariance
-
-    //float currentAngle = (lastAngle * 0.9) + (x_hat * 0.1); // Use the filtered angle
-    //lastAngle = currentAngle;
+    kz = getRawAngle();
+    p = p + q;
+    k = p / (p + r);
+    x_hat = x_hat + k * (kz - x_hat);
+    p = (1 - k) * p;
 
     float currentAngle = x_hat;
+
     Serial.print("Current angle: ");
     Serial.println(currentAngle);
     Serial.print("Actual angle: ");
