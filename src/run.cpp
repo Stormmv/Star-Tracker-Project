@@ -4,6 +4,14 @@ float finalAngle = 7.5; // Target final angle (degrees) at 30 minutes
 float lastAngle = 0.0;  // Initialize this based on the actual start angle
 float debugAngle = 0.0;
 
+// Kalman filter variables
+float q = 0.001; // Process noise covariance
+float r = 0.005; // Measurement noise covariance
+float k = 0;     // Kalman gain
+float x_hat = 0; // Estimated value
+float p = 1;     // Error covariance
+float z;         // Measurement
+
 float previousError = 0.0;
 float integral = 0.0;
 unsigned long lastTime = 0;
@@ -25,7 +33,17 @@ void run()
         setPoint = (elapsedTime / 1800.0) * finalAngle; // Target angle at this time
 
         // Get the current angle with filtering
-        float currentAngle = (lastAngle * 0.9) + (getRawAngle() * 0.1);
+        z = getRawAngle();
+
+        x_hat = x_hat; // No control input, so the estimated angle doesn't change
+        p = p + q;     // Increase uncertainty (covariance)
+
+        // Measurement update
+        k = p / (p + r);                 // Calculate Kalman gain
+        x_hat = x_hat + k * (z - x_hat); // Update estimate with measurement
+        p = (1 - k) * p;                 // Update uncertainty
+
+        float currentAngle = x_hat;
 
         // Calculate error
         float error = setPoint - (currentAngle - initialAngle);
