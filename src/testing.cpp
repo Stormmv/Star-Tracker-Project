@@ -136,11 +136,13 @@ void testKalmanFilter()
     x_hat = x_hat + k * (kz - x_hat); // Update estimated value
     p = (1 - k) * p;                  // Update error covariance
 
-    // Now, use x_hat instead of currentAngle in your calculations
-    float currentAngle = (lastAngle * 0.9) + (x_hat * 0.1); // Use the filtered angle
-    lastAngle = currentAngle;
+    //float currentAngle = (lastAngle * 0.9) + (x_hat * 0.1); // Use the filtered angle
+    //lastAngle = currentAngle;
+
+    float currentAngle = x_hat;
     Serial.print("Current angle: ");
     Serial.println(currentAngle);
     Serial.print("Actual angle: ");
     Serial.println(getAngle());
+    Serial.println("==============================================");
 }

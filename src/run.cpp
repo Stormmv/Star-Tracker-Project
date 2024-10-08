@@ -34,8 +34,9 @@ void run()
         p = (1 - k) * p;                  // Update error covariance
 
         // Now, use x_hat instead of currentAngle in your calculations
-        float currentAngle = (lastAngle * 0.9) + (x_hat * 0.1); // Use the filtered angle
-        lastAngle = currentAngle;
+        //float currentAngle = (lastAngle * 0.9) + (x_hat * 0.1); // Use the filtered angle
+        //lastAngle = currentAngle;
+        float currentAngle = x_hat;
 
         // Calculate error
         float error = setPoint - (currentAngle - initialAngle);
