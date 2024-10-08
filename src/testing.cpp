@@ -124,27 +124,21 @@ void showAngle()
 }
 
 // test Kalman filter
-//  Kalman filter variables
-float q = 0.001; // Process noise covariance
-float r = 0.005; // Measurement noise covariance
-float k = 0;     // Kalman gain
-float x_hat = 0; // Estimated value
-float p = 1;     // Error covariance
-float z;         // Measurement
-
 void testKalmanFilter()
 {
-    z = getRawAngle();
+    kz = getRawAngle(); // Replace with your function to get the current angle measurement
 
-    x_hat = x_hat; // No control input, so the estimated angle doesn't change
-    p = p + q;     // Increase uncertainty (covariance)
+    // Prediction step
+    p = p + q; // Update error covariance
 
-    // Measurement update
-    k = p / (p + r);                 // Calculate Kalman gain
-    x_hat = x_hat + k * (z - x_hat); // Update estimate with measurement
-    p = (1 - k) * p;                 // Update uncertainty
+    // Update step
+    k = p / (p + r);                  // Calculate Kalman gain
+    x_hat = x_hat + k * (kz - x_hat); // Update estimated value
+    p = (1 - k) * p;                  // Update error covariance
 
-    float currentAngle = x_hat;
+    // Now, use x_hat instead of currentAngle in your calculations
+    float currentAngle = (lastAngle * 0.9) + (x_hat * 0.1); // Use the filtered angle
+    lastAngle = currentAngle;
     Serial.print("Current angle: ");
     Serial.println(currentAngle);
 }

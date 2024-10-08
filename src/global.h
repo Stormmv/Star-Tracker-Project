@@ -25,5 +25,14 @@ extern float kp;
 extern float ki;
 extern float kd;
 
+extern float lastAngle;
+
+extern float q;
+extern float r;
+extern float k;
+extern float x_hat;
+extern float p;
+extern float kz;
+
 float getAngle();
 float getRawAngle();

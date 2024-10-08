@@ -22,6 +22,15 @@ float kp = 0.95;
 float ki = 0.2;
 float kd = 0.1;
 
+float lastAngle = 0.0;
+
+float q = 0.02; // Process noise covariance
+float r = 0.2; // Measurement noise covariance
+float k = 0;     // Kalman gain
+float x_hat = 0; // Estimated value
+float p = 1;     // Error covariance
+float kz;         // Measurement
+
 //====================================================================================================
 
 // get angle function
