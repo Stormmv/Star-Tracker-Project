@@ -1,16 +1,16 @@
 #include "global.h"
 
-//define motor and accelerometer
+// define motor and accelerometer
 AccelStepper motor(AccelStepper::FULL4WIRE, 6, 8, 7, 9);
 Adafruit_ADXL345_Unified accel = Adafruit_ADXL345_Unified(12345);
 
-//for angle calculation
+// for angle calculation
 float x = 0.0;
 float y = 0.0;
 float z = 0.0;
 float initialAngle = 0.0;
 
-//motor controller
+// motor controller
 int acceleration = 20000;
 int maxSpeed = 200;
 int speed = 152;
@@ -18,13 +18,13 @@ int steps = 200;
 
 //====================================================================================================
 
-//get angle function
-//gets the angle and averages it so that it is accurate enough to calibrate with
+// get angle function
+// gets the angle and averages it so that it is accurate enough to calibrate with
 int averageTimes = 5000;
 float getAngle()
 {
     // get average angle
-    delay(1000); //to stop any vibrations or movements that may throw off the angle calculation
+    delay(1000); // to stop any vibrations or movements that may throw off the angle calculation
     sensors_event_t event;
     accel.getEvent(&event);
     float angleBefore = 0;
@@ -39,4 +39,14 @@ float getAngle()
     }
     angleBefore /= averageTimes;
     return angleBefore;
+}
+
+float getRawAngle()
+{
+    sensors_event_t event;
+    accel.getEvent(&event);
+    x = event.acceleration.x;
+    y = event.acceleration.y;
+    z = event.acceleration.z;
+    return atan2(x, z) * (180.0 / M_PI);
 }

@@ -28,6 +28,7 @@ void setup()
 
   //get initial angle and print it
   initialAngle = getAngle();
+  lastAngle = initialAngle;
   Serial.print("Starting angle: ");
   Serial.println(initialAngle);
 

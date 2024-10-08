@@ -20,3 +20,4 @@ extern int speed;
 extern int steps;
 
 float getAngle();
+float getRawAngle();
