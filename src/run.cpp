@@ -55,7 +55,7 @@ void run()
         Serial.print(" | Kalman Angle: ");
         Serial.print(x_hat);
         Serial.print(" | Actual Angle: ");
-        Serial.println(getAngle());
+        Serial.println(debugAngle);
         lastDebugTime = currentTime;
     }
 
@@ -66,9 +66,14 @@ void run()
         debugAngle = getAngle();
         Serial.print("Time: ");
         Serial.print(currentTime / 60000); // Print time in minutes
-        Serial.print(" min | Final Angle: ");
+        Serial.print(" min | Current Angle Change: ");
+        Serial.print(debugAngle - initialAngle);
+        Serial.print(" | Desired Angle Change: ");
+        Serial.print(finalAngle);
+        Serial.print(" | Kalman Angle: ");
+        Serial.print(x_hat);
+        Serial.print(" | Actual Angle: ");
         Serial.println(debugAngle);
-
         while (1)
         {
         } // End program
