@@ -18,7 +18,7 @@ void run()
     p = (1 - k) * p;
 
     // Calculate the expected angle based on time
-    float totalTime = 1800.0; // Total time in seconds (30 minutes)
+    float totalTime = 1800.0;                                     // Total time in seconds (30 minutes)
     float expectedAngle = (elapsedTime / totalTime) * finalAngle; // Linearly scale the angle with time
 
     // Calculate the current angle using Kalman filtered data
@@ -39,8 +39,6 @@ void run()
     {
         speed = maxSpeed; // Cap at maximum speed
     }
-    Serial.print("Speed: ");
-    Serial.println(speed);
     motor.setSpeed(speed);
     motor.runSpeed();
 
