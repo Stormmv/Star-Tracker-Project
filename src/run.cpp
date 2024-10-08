@@ -60,7 +60,7 @@ void run()
     }
 
     // Stop the motor when 30 minutes (1800000 ms) have passed
-    if (millis() >= 1800000 && debugPrint)
+    if (millis() >= 1800000)
     {
         motor.stop();
         debugAngle = getAngle();
