@@ -13,14 +13,20 @@ float initialAngle = 0.0;
 // motor controller
 int acceleration = 20000;
 int maxSpeed = 200;
-int speed = 152;
+float speed = 130;
 int steps = 200;
+
+bool debugPrint = true;
+
+float kp = 0.95;
+float ki = 0.2;
+float kd = 0.1;
 
 //====================================================================================================
 
 // get angle function
 // gets the angle and averages it so that it is accurate enough to calibrate with
-int averageTimes = 5000;
+int averageTimes = 200;
 float getAngle()
 {
     // get average angle
