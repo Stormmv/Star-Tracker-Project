@@ -67,7 +67,7 @@ void run()
         Serial.print("Time: ");
         Serial.print(currentTime / 60000); // Print time in minutes
         Serial.print(" min | Current Angle Change: ");
-        Serial.print(debugAngle - initialAngle);
+        Serial.print(currentAngle - initialAngle);
         Serial.print(" | Desired Angle Change: ");
         Serial.print(finalAngle);
         Serial.print(" | Kalman Angle: ");
