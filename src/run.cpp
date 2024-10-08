@@ -1,7 +1,6 @@
 #include "run.h"
 
 float finalAngle = 7.5; // Target final angle (degrees) at 30 minutes
-float lastAngle = 0.0;  // Initialize this based on the actual start angle
 float debugAngle = 0.0;
 
 // Kalman filter variables
@@ -62,7 +61,6 @@ void run()
 
         // Update for the next loop
         previousError = error;
-        lastAngle = currentAngle;  // Update lastAngle for filtering
         lastPIDTime = currentTime; // Update the time for the next PID loop
         if (debugPrint)
         {
