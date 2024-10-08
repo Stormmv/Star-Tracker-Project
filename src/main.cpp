@@ -30,12 +30,6 @@ void setup()
   {
     Serial.print("Starting angle: ");
     Serial.println(initialAngle);
-    Serial.print("kp: ");
-    Serial.println(kp);
-    Serial.print("ki: ");
-    Serial.println(ki);
-    Serial.print("kd: ");
-    Serial.println(kd);
   }
 }
 

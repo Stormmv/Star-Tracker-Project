@@ -31,9 +31,9 @@ void run()
     speed = speed * (angleDifference + 1);
 
     // Cap the speed between minimum and maximum values
-    if (speed < 10)
+    if (speed < minSpeed)
     {
-        speed = 10; // Minimum speed
+        speed = minSpeed; // Minimum speed
     }
     if (speed > maxSpeed)
     {

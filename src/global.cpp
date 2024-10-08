@@ -12,15 +12,12 @@ float initialAngle = 0.0;
 
 // motor controller
 int acceleration = 20000;
-int maxSpeed = 350;
-float speed = 130;
+int maxSpeed = 300;
+int minSpeed = 100;
+float speed = 100;
 int steps = 200;
 
 bool debugPrint = true;
-
-float kp = 1.00;
-float ki = 0.20;
-float kd = 0.08;
 
 float lastAngle = 0.0;
 

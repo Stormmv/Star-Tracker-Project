@@ -16,14 +16,11 @@ extern float initialAngle;
 
 extern int acceleration;
 extern int maxSpeed;
+extern int minSpeed;
 extern float speed;
 extern int steps;
 
 extern bool debugPrint;
-
-extern float kp;
-extern float ki;
-extern float kd;
 
 extern float lastAngle;
 
