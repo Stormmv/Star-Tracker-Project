@@ -72,9 +72,9 @@ void run()
         }
     }
 
-    if (motor.speed() < 30)
+    if (motor.speed() < 10)
     {
-        motor.setSpeed(30);
+        motor.setSpeed(10);
     }
 
     motor.runSpeed();

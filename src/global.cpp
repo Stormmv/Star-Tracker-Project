@@ -12,7 +12,7 @@ float initialAngle = 0.0;
 
 // motor controller
 int acceleration = 20000;
-int maxSpeed = 200;
+int maxSpeed = 300;
 float speed = 130;
 int steps = 200;
 
