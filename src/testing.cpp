@@ -141,4 +141,6 @@ void testKalmanFilter()
     lastAngle = currentAngle;
     Serial.print("Current angle: ");
     Serial.println(currentAngle);
+    Serial.print("Actual angle: ");
+    Serial.println(getAngle());
 }
