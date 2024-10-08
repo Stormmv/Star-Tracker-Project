@@ -64,9 +64,8 @@ void run()
     {
         motor.stop();
         debugAngle = getAngle();
-        Serial.print("Time: ");
-        Serial.print(currentTime / 60000); // Print time in minutes
-        Serial.print(" min | Current Angle Change: ");
+        Serial.print("Time: 30 min");
+        Serial.print(" | Current Angle Change: ");
         Serial.print(currentAngle - initialAngle);
         Serial.print(" | Desired Angle Change: ");
         Serial.print(finalAngle);
