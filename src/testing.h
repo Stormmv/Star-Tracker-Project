@@ -4,3 +4,4 @@
 void testLogFor15m();
 void testGetSpeed();
 void showAngle();
+void testKalmanFilter();

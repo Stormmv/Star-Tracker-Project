@@ -6,6 +6,7 @@
 bool testLog15m = false;
 bool testGetSpeedBool = false;
 bool showAngleBool = false;
+bool testKalmanFilterBool = false;
 
 void setup()
 {
@@ -55,6 +56,10 @@ void loop()
   else if (showAngleBool)
   {
     showAngle();
+  }
+  else if (testKalmanFilterBool)
+  {
+    testKalmanFilter();
   }
   else
   {
